@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
     {
         if (record.getId() != null && record.getId().isBlank()) record.setId(null);
         AuthService.requireLogin(session);
-
+        
         if (!AuthService.isAdmin(session) && record.getId() != null && !record.getId().isBlank()) {
             var existing = service.get(record.getId());
             if (!AuthService.userId(session).equals(existing.getCustomerId())) {
