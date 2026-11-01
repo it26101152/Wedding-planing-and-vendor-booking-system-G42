@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 @Controller @RequestMapping("/payments") public class PaymentController
 {
     private final PaymentService service;
@@ -28,6 +30,13 @@ import org.springframework.web.bind.annotation.*;
                 .stream().filter(r->AuthService.userId(session).equals(r.getCustomerId()))
                 .toList());
         model.addAttribute("admin", AuthService.isAdmin(session));
+        Map<String,String> balances = new LinkedHashMap<>();
+        for (var b : bookingService.list()) {
+            if (AuthService.isAdmin(session) || AuthService.userId(session).equals(b.getCustomerId())) {
+                balances.put(b.getId(), service.balance(b.getId()).toPlainString());
+            }
+        }
+        model.addAttribute("balances", balances);
         if (AuthService.isAdmin(session)) {
             model.addAttribute("customers", userService.list().stream().filter(u -> "COUPLE".equals(u.getRole())).toList());
             model.addAttribute("pendingCustomers", pendingCustomers.list());
@@ -35,6 +44,18 @@ import org.springframework.web.bind.annotation.*;
         model.addAttribute("bookings", AuthService.isAdmin(session) ? bookingService.list() : bookingService.list().stream()
                 .filter(r -> AuthService.userId(session).equals(r.getCustomerId())).toList());
         return "payments/list";
+    }
+    @GetMapping("/invoice/{id}") public String invoice(@PathVariable String id, HttpSession session, Model model) {
+        AuthService.requireLogin(session);
+        Payment payment = service.get(id);
+        if (!AuthService.isAdmin(session) && !AuthService.userId(session).equals(payment.getCustomerId()))
+            throw new IllegalArgumentException("Not your payment");
+        model.addAttribute("payment", payment);
+        model.addAttribute("invoiceNumber", "INV-" + payment.getId());
+        model.addAttribute("total", service.bookingTotal(payment.getBookingId()).toPlainString());
+        model.addAttribute("paid", service.paidAmount(payment.getBookingId()).toPlainString());
+        model.addAttribute("balance", service.balance(payment.getBookingId()).toPlainString());
+        return "payments/invoice";
     }
     @PostMapping("/save") public String save(@ModelAttribute Payment record,HttpSession session)
     {
