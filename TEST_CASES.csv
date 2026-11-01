@@ -1,0 +1,16 @@
+ID,Area,Test,Expected result,Status
+T01,Registration,Register valid customer,Customer account created,Not run
+T02,Registration,Register duplicate email,Validation message,Not run
+T03,Registration,Register short password,Validation message,Not run
+T04,User Management,Open with empty search,All customers visible,Not run
+T05,User Management,Type partial email,Matching suggestions shown,Not run
+T06,User Management,Select customer,Full email visible,Not run
+T07,Roles,Promote customer as Main Admin,Admin role assigned,Not run
+T08,Roles,Promoted user logs in,Admin dashboard shown,Not run
+T09,Roles,Other admin tries promotion,Action denied,Not run
+T10,Roles,Demote admin,Customer role assigned,Not run
+T11,Security,Delete Main Admin,Action denied,Not run
+T12,Sessions,Restart application and revisit dashboard,Redirect to login,Not run
+T13,Modules,Create and update vendor,Record persisted,Not run
+T14,Modules,Create wedding booking and payment,Linked IDs validated,Not run
+T15,Modules,Guest RSVP update,Record persisted,Not run

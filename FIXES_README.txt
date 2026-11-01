@@ -1,0 +1,1 @@
+Only Member 2 vendor files and Member 5 payment files were edited. Member 3 wedding and customer code is unchanged. Runtime data files intentionally excluded to avoid sharing account/payment records. Maven not available in build environment; run mvn clean test and mvn package locally. Payment invoice uses live vendor price; status-based refund tracking only.
