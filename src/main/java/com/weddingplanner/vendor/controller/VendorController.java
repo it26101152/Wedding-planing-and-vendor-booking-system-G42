@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
     {
         this.service=service;
     }
-    @GetMapping public String list(HttpSession session,Model model)
+    @GetMapping public String list(HttpSession session,Model model, @RequestParam(required=false) String sort)
     {
         AuthService.requireLogin(session);
-        model.addAttribute("records",service.list());
+        model.addAttribute("records","price".equalsIgnoreCase(sort) ? service.listSortedByPrice() : service.list());
         model.addAttribute("admin", AuthService.isAdmin(session));
         return "vendors/list";
     }

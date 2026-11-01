@@ -3,6 +3,10 @@ import com.weddingplanner.vendor.model.Vendor;
 import com.weddingplanner.vendor.repository.VendorRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.math.BigDecimal;
+import java.util.Comparator;
+import com.weddingplanner.common.datastructure.CustomLinkedList;
+import com.weddingplanner.common.util.BubbleSort;
 
 import com.weddingplanner.common.util.ModuleValidation;
 @Service public class VendorService
@@ -16,7 +20,13 @@ import com.weddingplanner.common.util.ModuleValidation;
     }
     public List<Vendor> list()
     {
-        return repository.findAll();
+        return CustomLinkedList.fromList(repository.findAll()).toList();
+    }
+    /** Vendor records are loaded into the hand-written linked list and sorted in place. */
+    public List<Vendor> listSortedByPrice() {
+        CustomLinkedList<Vendor> vendors = CustomLinkedList.fromList(repository.findAll());
+        BubbleSort.sort(vendors, Comparator.comparing(v -> new BigDecimal(v.getPrice().trim())));
+        return vendors.toList();
     }
     public Vendor get(String id)
     {
