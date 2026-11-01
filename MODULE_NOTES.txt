@@ -1,0 +1,3 @@
+Vendor CRUD retained. VendorService now uses shared CustomLinkedList and BubbleSort for price sorting; /vendors?sort=price renders server-sorted vendors. Requires existing shared common, booking, and user modules. Do not overwrite other members.
+
+Full Maven runtime build not verified in this environment.
