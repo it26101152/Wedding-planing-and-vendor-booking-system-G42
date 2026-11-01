@@ -1,11 +1,12 @@
 package com.weddingplanner.common.exception;
-
-public class ValidationException extends RuntimeException {
-    public ValidationException(String message) {
+public class ValidationException extends RuntimeException
+{
+    public ValidationException(String message)
+    {
         super(message);
     }
-
-    public ValidationException(String message, Throwable cause) {
+    public ValidationException(String message, Throwable cause)
+    {
         super(message, cause);
     }
 }
