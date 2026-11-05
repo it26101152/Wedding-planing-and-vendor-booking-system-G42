@@ -38,13 +38,18 @@ public class Payment extends BaseEntity
     {
         this.status=v==null?"":v;
     }
+    private String refundAmount="";
+    private String refundDate="";
+    public String getRefundAmount() { return refundAmount; }
+    public void setRefundAmount(String v) { refundAmount=v==null?"":v; }
+    public String getRefundDate() { return refundDate; }
+    public void setRefundDate(String v) { refundDate=v==null?"":v; }
     @Override public String[] toFields()
     {
         return new String[]
                 {
-                        customerId,bookingId,amount,status
+                        customerId,bookingId,amount,status,refundAmount,refundDate
                 }
                 ;
     }
 }
-

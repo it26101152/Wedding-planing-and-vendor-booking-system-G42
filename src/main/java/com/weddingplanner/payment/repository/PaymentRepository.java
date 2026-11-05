@@ -17,6 +17,8 @@ import org.springframework.stereotype.Repository;
         e.setBookingId(f[1]);
         e.setAmount(f[2]);
         e.setStatus(f[3]);
+        if (f.length > 4) e.setRefundAmount(f[4]);
+        if (f.length > 5) e.setRefundDate(f[5]);
         return e;
     }
 }
