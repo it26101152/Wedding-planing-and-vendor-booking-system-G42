@@ -1,0 +1,3 @@
+Payment CRUD retained. Added booking balance based on current vendor price, Paid/Partial settlement, Refunded status reversal, overpayment guard, and printable /payments/invoice/{id}. Requires shared common, booking, vendor, customer and user modules. IMPORTANT: this is status-based refund tracking, not a real payment gateway refund. Vendor price is NOT snapshotted; if price changes historical balances change.
+
+Full Maven runtime build not verified in this environment.
