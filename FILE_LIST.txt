@@ -1,0 +1,9 @@
+src/main/java/com/weddingplanner/guest/controller/.gitkeep
+src/main/java/com/weddingplanner/guest/controller/GuestController.java
+src/main/java/com/weddingplanner/guest/model/.gitkeep
+src/main/java/com/weddingplanner/guest/model/Guest.java
+src/main/java/com/weddingplanner/guest/repository/.gitkeep
+src/main/java/com/weddingplanner/guest/repository/GuestRepository.java
+src/main/java/com/weddingplanner/guest/service/.gitkeep
+src/main/java/com/weddingplanner/guest/service/GuestService.java
+src/main/webapp/WEB-INF/views/guests/list.jsp
