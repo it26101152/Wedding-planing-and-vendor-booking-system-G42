@@ -1,0 +1,4 @@
+Member 5: saved booking total for balance, partial/full refund amount/date tracking, backward compatible payment record reads, invoice display.
+Existing historical bookings without saved totals still fall back to current vendor price until edited/migrated.
+Requires updated Member 4 and Member 5 packages together. No other member modules were modified.
+Runtime tests not yet executed.
