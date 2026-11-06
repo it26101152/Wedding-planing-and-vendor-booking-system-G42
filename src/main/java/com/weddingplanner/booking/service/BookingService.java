@@ -3,6 +3,8 @@ import com.weddingplanner.booking.model.Booking;
 import com.weddingplanner.booking.repository.BookingRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import com.weddingplanner.user.service.UserService;
 import com.weddingplanner.vendor.service.VendorService;
 import com.weddingplanner.common.util.ModuleValidation;
@@ -37,9 +39,34 @@ import com.weddingplanner.common.util.ModuleValidation;
     public Booking save(Booking entity)
     {
         validateCustomer(entity);
-        vendorService.get(ModuleValidation.required(entity.getVendorId(), "Vendor ID"));
+        var vendor = vendorService.get(ModuleValidation.required(entity.getVendorId(), "Vendor ID"));
         ModuleValidation.date(entity.getEventDate(), "Booking date");
         ModuleValidation.choice(entity.getStatus(), "Booking status", "Pending", "Confirmed", "Cancelled", "Completed");
+        // A vendor can have only one active booking per day. Cancelled bookings do not block.
+        if (!"Cancelled".equals(entity.getStatus())) {
+            boolean conflict = repository.findAll().stream().anyMatch(existing ->
+                !java.util.Objects.equals(existing.getId(), entity.getId())
+                && existing.getVendorId().equals(entity.getVendorId())
+                && existing.getEventDate().equals(entity.getEventDate())
+                && !"Cancelled".equals(existing.getStatus()));
+            if (conflict) throw new IllegalArgumentException("Vendor is already booked for this date");
+        }
+        // Never accept a total supplied by the browser; snapshot the vendor price on CREATE.
+        if (entity.getId() == null || entity.getId().isBlank()) {
+            BigDecimal total = new BigDecimal(vendor.getPrice()).setScale(2, RoundingMode.HALF_UP);
+            if (total.signum() <= 0) throw new IllegalArgumentException("Vendor price must be positive");
+            entity.setBookingTotal(total.toPlainString());
+        } else {
+            Booking existing = get(entity.getId());
+            if (paymentRepository.findAll().stream().anyMatch(p -> entity.getId().equals(p.getBookingId()))
+                && (!existing.getVendorId().equals(entity.getVendorId())
+                    || !existing.getCustomerId().equals(entity.getCustomerId())))
+                throw new IllegalArgumentException("Cannot change booking vendor/customer after payments exist");
+            entity.setBookingTotal(existing.getBookingTotal());
+            // Migrate old bookings to a price snapshot on first update, if no stored snapshot exists.
+            if (entity.getBookingTotal().isBlank())
+                entity.setBookingTotal(new BigDecimal(vendor.getPrice()).setScale(2, RoundingMode.HALF_UP).toPlainString());
+        }
         return repository.save(entity);
     }
     /** Preserve existing records after a customer is promoted to ADMIN. */

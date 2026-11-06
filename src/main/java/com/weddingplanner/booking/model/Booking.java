@@ -38,11 +38,15 @@ public class Booking extends BaseEntity
     {
         this.status=v==null?"":v;
     }
+    // Fixed at booking creation; older TXT records have no snapshot.
+    private String bookingTotal="";
+    public String getBookingTotal() { return bookingTotal; }
+    public void setBookingTotal(String value) { bookingTotal=value==null?"":value; }
     @Override public String[] toFields()
     {
         return new String[]
         {
-            customerId,vendorId,eventDate,status
+            customerId,vendorId,eventDate,status,bookingTotal
         }
         ;
     }

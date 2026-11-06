@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
         e.setVendorId(f[1]);
         e.setEventDate(f[2]);
         e.setStatus(f[3]);
+        if (f.length > 4) e.setBookingTotal(f[4]);
         return e;
     }
 }
