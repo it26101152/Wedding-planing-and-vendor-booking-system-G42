@@ -1,0 +1,12 @@
+src/main/java/com/weddingplanner/customer/model/PendingCustomer.java
+src/main/java/com/weddingplanner/customer/repository/PendingCustomerRepository.java
+src/main/java/com/weddingplanner/customer/service/PendingCustomerService.java
+src/main/java/com/weddingplanner/wedding/controller/.gitkeep
+src/main/java/com/weddingplanner/wedding/controller/WeddingController.java
+src/main/java/com/weddingplanner/wedding/model/.gitkeep
+src/main/java/com/weddingplanner/wedding/model/Wedding.java
+src/main/java/com/weddingplanner/wedding/repository/.gitkeep
+src/main/java/com/weddingplanner/wedding/repository/WeddingRepository.java
+src/main/java/com/weddingplanner/wedding/service/.gitkeep
+src/main/java/com/weddingplanner/wedding/service/WeddingService.java
+src/main/webapp/WEB-INF/views/weddings/list.jsp
