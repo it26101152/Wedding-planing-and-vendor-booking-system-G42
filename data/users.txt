@@ -1,1 +1,2 @@
 # id|createdAt|<user fields>
+USR0001|2026-11-08T10:58:10.094600600|buddhika|buddhikamahesh424@gmail.com|$2a$10$qsQSoLisqaYFnmWQGI1IEuzF7Cb1rKeYMlUw4eGdJjU2BXhGjdBDq|COUPLE
