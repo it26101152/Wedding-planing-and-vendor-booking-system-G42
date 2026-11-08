@@ -43,7 +43,7 @@ public class Vendor extends BaseEntity
         return new String[]
         {
             name,category,price,description
-        }
-        ;
+        };
+
     }
 }
