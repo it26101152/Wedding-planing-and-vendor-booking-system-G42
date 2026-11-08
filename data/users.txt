@@ -1,1 +1,2 @@
 # id|createdAt|<user fields>
+USR0001|2026-11-08T11:08:05.201675800|Administrator|admin@example.com|$2a$10$XTmAVOAbjGyE7brYsBokxObxVgSz8eQMr2HTr4bMeHhnaDMVo15x6|ADMIN
